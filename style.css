@@ -1,4 +1,5 @@
-:root{
+:root {
+    --font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     --dark-bg-color: black;
     --dark-text-color: white;
     --dark-header-bg-color: rgb(31, 43, 52);
@@ -7,19 +8,19 @@
     --light-ctry-name-bg: rgb(223, 223, 223);
 }
 
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     background-color: var(--light-bg-color);
     color: var(--light-text-color);
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--font-family);
 }
 
-.headerContainer{
+.headerContainer {
     height: 6em;
     display: flex;
     justify-content: space-between;
@@ -28,80 +29,170 @@ body{
     box-shadow: 0 0 5px rgb(116, 116, 116);
 }
 
-#toggle{
+#toggle {
     display: none;
 }
 
-#toggleTheme_div label{
+#toggleTheme_div label {
     cursor: pointer;
 }
 
-body:has(#toggle:checked){
+body:has(#toggle:checked),
+body:has(#toggle:checked) #countryDetails {
     background-color: var(--dark-bg-color);
     color: var(--dark-text-color);
 }
 
-body:has(#toggle:checked) header, body:has(#toggle:checked) h3, body:has(#toggle:checked) .countryContainer{
+body:has(#toggle:checked) header,
+body:has(#toggle:checked) h3,
+body:has(#toggle:checked) .countriesContainer,
+body:has(#toggle:checked) #back {
     background-color: var(--dark-header-bg-color);
 }
 
-body:has(#toggle:checked) header, body:has(#toggle:checked) .countryContainer{
+body:has(#toggle:checked) header,
+body:has(#toggle:checked) .countriesContainer {
     box-shadow: 0 0 18px gray;
 }
 
-.fa-moon{
+body:has(#toggle:checked) #back{
+    color: var(--dark-text-color);
+    border-color: rgb(70, 69, 69);
+}
+
+.fa-moon {
     margin-right: 0.3em;
 }
 
-.mainContainer{
+.mainContainer {
     margin-top: 2em;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));/*repeat(3, 1fr);*/
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
     margin-left: 3.5em;
-    row-gap: 3em; 
+    row-gap: 3em;
 }
 
-.countryContainer{
-    width:20.3em;
+#countryDetails{
+    width: 100vw;
+    height: 100vh;
+    position:fixed;
+    top:0;
+    left:0;
+    background-color: white;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.countryDetails_hide{
+    display: none;
+    
+}
+
+.body_hide{
+    overflow: hidden;
+}
+
+.countriesContainer {
+    width: 22em;
     box-shadow: 0 0 5px rgb(116, 116, 116);
     border-radius: 0.4em;
+    cursor: pointer;
 }
 
-img{
-    width: 20.3em;
-    height: 12em;
+.capital{
+    background-color: rgb(6, 126, 6);
+    border-radius: 0.4em;
+    padding: 0.2em;
+    color: white;
 }
 
-h3{
+.flagContainer {
+    width: 22em;
+    height: 13em;
+    margin-bottom: 0.5em;
+}
+
+img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+h3 {
     background-color: rgb(223, 223, 223);
     padding-left: 0.4em;
+    padding-bottom: 0.3em;
+    padding-top: 0.3em;
 }
 
-.details{
+.details {
     padding-left: 1em;
-    line-height: 1.4em;
+    line-height: 1.8em;
     font-size: 0.9em;
 }
 
+#back{
+    margin-top: 2em;
+    margin-bottom: 1em;
+    margin-left: 3em;
+    padding: 0.3em;
+    font-family: var(--font-family);
+    font-size: large;
+    box-shadow: 0 0 5px rgb(161, 161, 161);
+    border-radius: 5px;
+    border-color: rgb(253, 253, 253);
+    cursor: pointer;
+}
+
+.country_modal_container{
+    display: flex;
+    align-items: center;
+    margin: 0 3em;
+    /* width: 100%; */
+}
+
+.country_modal_flex1{
+    width: 40em;
+    height: 25em;
+    margin-right: 1em;
+}
+
+.country_modal_flag{
+    width: 100%;
+    height:100%;
+    object-fit: contain;
+}
+
+.country_modal_info{
+    display: flex;
+    gap:1em;
+    margin-top: 1em;
+}
+
+.country_modal_items{
+    width: 50%;
+    overflow-wrap: break-word;
+}
+
 @media (max-width: 380px) {
-    body{
+    body {
         font-size: 0.7rem;
     }
 
-    #toggleTheme_div{
+    #toggleTheme_div {
         width: 40%;
         text-align: right;
     }
 
-    .header_flex1{
-        width:60%;
+    .header_flex1 {
+        width: 60%;
     }
 
-    .countryContainer{
-        width:20em;
+    .countriesContainer {
+        width: 20em;
     }
 
-    img{
+    img {
         width: 20em;
         height: 11em;
     }
