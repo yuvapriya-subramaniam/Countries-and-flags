@@ -63,10 +63,14 @@ fetchAllCountries().then((countries) => {
       type: "text",
       placeholder: "Search country",
       id: "search",
-      class: "srch_flex1"
+      className: "srchFilter_flexItems"
     });
-
+    const SRCH_ICON = document.createElement("i");
+    SRCH_ICON.classList.add("fa-solid", "fa-magnifying-glass", "srch-icon");
+    
     const FILTER = document.createElement("select");
+    FILTER.setAttribute("id", "filter");
+    FILTER.setAttribute("class", "srchFilter_flexItems");
     const FILTER_OPTS = `<option value="" selected disabled>Filter by region</option>
                         <option value="all">All</option>
                         <option value="Asia">Asia</option>
@@ -76,7 +80,7 @@ fetchAllCountries().then((countries) => {
                         <option value="Europe">Europe</option>
                         <option value="Oceania">Oceania</option>`;
     FILTER.innerHTML = FILTER_OPTS;
-    SEARCH_FILTER.append(SEARCH_BOX, FILTER);
+    SEARCH_FILTER.append(SEARCH_BOX, SRCH_ICON, FILTER);
 
     const COUNTRIES_DIV = document.createElement("div");
     COUNTRIES_DIV.setAttribute("id", "countriesDiv");
@@ -169,15 +173,26 @@ fetchAllCountries().then((countries) => {
     displayCountries(countries);
     //display searched countries
     SEARCH_BOX.addEventListener("input", event => {
+      // FILTER.value = '';
       let search_country = event.target.value.toLowerCase();
-      let searchCountry = countries.filter(country => country.name.common.toLowerCase().includes(search_country));
+      let searchCountry=[];
+      if(FILTER.value==='' || FILTER.value==='all'){
+        searchCountry = countries.filter(country => country.name.common.toLowerCase().includes(search_country));
+      }
+      searchCountry = countries.filter(country => country.name.common.toLowerCase().includes(search_country) && country.region.toLowerCase() === FILTER.value.toLowerCase());
+      
       displayCountries(searchCountry);
     });
     //display filter by region countries
     FILTER.addEventListener("change", () => {
+      SEARCH_BOX.value='';
       let region = FILTER.value.toLowerCase();
-      SEARCH_BOX.value = '';
       let filterCountry = countries.filter(country => region === "all" ? country : country.region.toLowerCase() === region);
+      // let filterCountry = [];
+      // if(SEARCH_BOX.value){
+      //   filterCountry = countries.filter(country => region === "all" ? country : country.region.toLowerCase() === region);
+      // }
+      // filterCountry = countries.filter(country => region === "all" ? country : country.region.toLowerCase() === region && country.name.common.toLowerCase().includes(SEARCH_BOX.value.toLowerCase()));
       displayCountries(filterCountry);
     });
     main.append(SEARCH_FILTER, COUNTRIES_DIV);
