@@ -95,12 +95,9 @@ fetchAllCountries().then((countries) => {
         className: "countryDetails_hide",
       });
 
-      const back_btn = document.createElement("input");
-      Object.assign(back_btn, {
-        id: "back",
-        value: "Back",
-        type: "button"
-      });
+      const back_btn = document.createElement("button");
+      back_btn.setAttribute("id", "back");
+      back_btn.textContent = "Back";
       back_btn.addEventListener("click", () => {
         countryDetails.classList.toggle("countryDetails_hide");
         body.classList.toggle("body_hide");
@@ -139,4 +136,12 @@ fetchAllCountries().then((countries) => {
   }
 });
 
-body.append(main);
+//Top button to go to the top of the page
+const SCROLL_TOP = document.createElement("button");
+SCROLL_TOP.setAttribute("id", "scrollTop");
+SCROLL_TOP.textContent = "Top";
+SCROLL_TOP.addEventListener("click", () => {
+  window.scrollTo(0, 0);
+});
+
+body.append(SCROLL_TOP, main);

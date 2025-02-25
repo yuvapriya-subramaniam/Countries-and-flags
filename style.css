@@ -2,7 +2,7 @@
     --font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     --dark-bg-color: black;
     --dark-text-color: white;
-    --dark-header-bg-color: rgb(31, 43, 52);
+    --dark-content-bg-color: rgb(31, 43, 52);
     --light-bg-color: white;
     --light-text-color: black;
     --light-ctry-name-bg: rgb(223, 223, 223);
@@ -47,7 +47,7 @@ body:has(#toggle:checked) header,
 body:has(#toggle:checked) h3,
 body:has(#toggle:checked) .countriesContainer,
 body:has(#toggle:checked) #back {
-    background-color: var(--dark-header-bg-color);
+    background-color: var(--dark-content-bg-color);
 }
 
 body:has(#toggle:checked) header,
@@ -172,6 +172,27 @@ h3 {
 .country_modal_items{
     width: 50%;
     overflow-wrap: break-word;
+}
+
+#scrollTop{
+    position: fixed;
+    right: 1em;
+    bottom: 2em;
+    border-radius: 70%;
+    width: 3em;
+    height: 3em;
+    background-color: gray;
+    color: white;
+    font-family: var(--font-family);
+    border: none;
+    cursor: pointer;
+    font-size: medium;
+    text-transform: uppercase;
+}
+
+body:has(#toggle:checked) #scrollTop{
+    background-color: var(--dark-content-bg-color);
+    border: 0.2em solid white;
 }
 
 @media (max-width: 380px) {
