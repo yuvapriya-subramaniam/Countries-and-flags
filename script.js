@@ -67,6 +67,9 @@ fetchAllCountries().then((countries) => {
     });
     const SRCH_ICON = document.createElement("i");
     SRCH_ICON.classList.add("fa-solid", "fa-magnifying-glass", "srch-icon");
+
+    const TOTAL_COUNTRIES = document.createElement("p")
+    TOTAL_COUNTRIES.setAttribute("id", "totalCountries");
     
     const FILTER = document.createElement("select");
     FILTER.setAttribute("id", "filter");
@@ -80,7 +83,7 @@ fetchAllCountries().then((countries) => {
                         <option value="Europe">Europe</option>
                         <option value="Oceania">Oceania</option>`;
     FILTER.innerHTML = FILTER_OPTS;
-    SEARCH_FILTER.append(SEARCH_BOX, SRCH_ICON, FILTER);
+    SEARCH_FILTER.append(SEARCH_BOX, SRCH_ICON, TOTAL_COUNTRIES, FILTER);
 
     const COUNTRIES_DIV = document.createElement("div");
     COUNTRIES_DIV.setAttribute("id", "countriesDiv");
@@ -170,6 +173,7 @@ fetchAllCountries().then((countries) => {
       }
     }
     //display all countries
+    TOTAL_COUNTRIES.textContent = `${countries.length} countries`;
     displayCountries(countries);
     //display searched countries
     SEARCH_BOX.addEventListener("input", event => {
@@ -178,9 +182,10 @@ fetchAllCountries().then((countries) => {
       let searchCountry=[];
       if(FILTER.value==='' || FILTER.value==='all'){
         searchCountry = countries.filter(country => country.name.common.toLowerCase().includes(search_country));
+      }else{
+        searchCountry = countries.filter(country => country.name.common.toLowerCase().includes(search_country) && country.region.toLowerCase() === FILTER.value.toLowerCase());
       }
-      searchCountry = countries.filter(country => country.name.common.toLowerCase().includes(search_country) && country.region.toLowerCase() === FILTER.value.toLowerCase());
-      
+      TOTAL_COUNTRIES.textContent = `${searchCountry.length} ${searchCountry.length>1 ? "countries" : "country"}`;
       displayCountries(searchCountry);
     });
     //display filter by region countries
@@ -193,6 +198,7 @@ fetchAllCountries().then((countries) => {
       //   filterCountry = countries.filter(country => region === "all" ? country : country.region.toLowerCase() === region);
       // }
       // filterCountry = countries.filter(country => region === "all" ? country : country.region.toLowerCase() === region && country.name.common.toLowerCase().includes(SEARCH_BOX.value.toLowerCase()));
+      TOTAL_COUNTRIES.textContent = `${filterCountry.length} countries`;
       displayCountries(filterCountry);
     });
     main.append(SEARCH_FILTER, COUNTRIES_DIV);

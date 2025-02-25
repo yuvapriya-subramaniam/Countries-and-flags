@@ -47,8 +47,13 @@ body:has(#toggle:checked) #countryDetails {
 body:has(#toggle:checked) header,
 body:has(#toggle:checked) h3,
 body:has(#toggle:checked) .countriesContainer,
-body:has(#toggle:checked) #back {
+body:has(#toggle:checked) #back,
+body:has(#toggle:checked) .srchFilter_flexItems {
     background-color: var(--dark-content-bg-color);
+}
+
+body:has(#toggle:checked) .srchFilter_flexItems{
+    color: var(--dark-text-color);
 }
 
 body:has(#toggle:checked) header,
@@ -75,10 +80,13 @@ body:has(#toggle:checked) #back{
 }
 
 .srchFilter_flexItems{
-    height: 3.5em;
+    height: 2.5em;
     border: none;
     box-shadow: var(--light-box-shadow);
     border-radius: 0.4em;
+    font-family: var(--font-family);
+    font-size: large;
+    padding: 0.4em;
 }
 
 .srchFilter_flexItems:focus{
@@ -92,6 +100,11 @@ body:has(#toggle:checked) #back{
 
 #search{
     width: 25em;
+}
+
+#totalCountries{
+    /* margin-right: auto; */
+    margin-right: 21em;
 }
 
 #filter{
