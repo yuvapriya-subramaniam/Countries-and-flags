@@ -37,7 +37,6 @@ body.append(header);
     .catch((error) => console.error("Error fetching data:", error));
 }
  fetchAllCountries().then(response => console.log(response)); */
-
 async function fetchAllCountries() {
   try {
     const response = await fetch(URL);
@@ -46,7 +45,7 @@ async function fetchAllCountries() {
         `HTTP error. Response status is ${response.status} and response message is ${response.statusText}`
       );
     }
-    countries = await response.json();
+    const countries = await response.json();
     return countries;
   } catch (error) {
     console.error(`Error occured in data fetch: ${error.message}`);
@@ -60,6 +59,34 @@ main.setAttribute("class", "mainContainer");
 
 fetchAllCountries().then((countries) => {
   if (countries) {
+    const SEARCH_FILTER = document.createElement("div");
+    SEARCH_FILTER.setAttribute("id", "srchFilterDiv");
+    SEARCH_FILTER.setAttribute("class", "srchFilterContainer");
+    const SEARCH_BOX = document.createElement("input");
+    Object.assign(SEARCH_BOX, {
+      type: "search",
+      placeholder: "Search country",
+      id: "search",
+      class: "srch_flex1"
+    });
+
+    const FILTER = document.createElement("select");
+    const FILTER_OPTS = `<option value="" selected disabled>Filter by region</option>
+                        <option value="all">All</option>
+                        <option value="Asia">Asia</option>
+                        <option value="Africa">Africa</option>
+                        <option value="Americas">Americas</option>
+                        <option value="Antarctic">Antarctic</option>
+                        <option value="Europe">Europe</option>
+                        <option value="Oceania">Oceania</option>`;
+    FILTER.innerHTML=FILTER_OPTS;                        
+    
+    SEARCH_FILTER.append(SEARCH_BOX, FILTER);
+    
+    const COUNTRIES_DIV = document.createElement("div");
+    COUNTRIES_DIV.setAttribute("id", "countriesDiv");
+    COUNTRIES_DIV.setAttribute("class", "countries_parent_grid");
+
     //populate data for all the countries in a country card
     const countries_size = countries.length;
     console.log(countries_size);
@@ -73,11 +100,12 @@ fetchAllCountries().then((countries) => {
           : "No capital";
       const LATLNG = COUNTRY.latlng.join(", ");
       const TIMEZONES = COUNTRY.timezones ? COUNTRY.timezones.join(", ") : "No data";
-      const LANGUAGES = "languages" in COUNTRY ? Object.values(COUNTRY.languages).join(", ") : "No data";
-      const CURRENCIES = "currencies" in COUNTRY ? Object.values(COUNTRY.currencies).map(currency => {
+      const LANGUAGES = "languages" in COUNTRY && Object.values(COUNTRY.languages).length > 0 ? Object.values(COUNTRY.languages).join(", ") : "No data";
+      const CURRENCIES = "currencies" in COUNTRY && Object.values(COUNTRY.currencies).length > 0 ? Object.values(COUNTRY.currencies).map(currency => {
         let symbol = "("+currency.symbol+")";
         return currency.name+symbol;
       }).join(", ") : "No data";
+      const SUB_REGION = COUNTRY.subregion ? COUNTRY.subregion : "No data";
       //Country card data for dashboard - displayed for all countries
       let cardData = `<h3>${COUNTRY.name.common}</h3>
                       <div class='flagContainer'>
@@ -116,7 +144,7 @@ fetchAllCountries().then((countries) => {
                               <p><strong>Official Name:</strong> ${COUNTRY.name.official}</p>
                               <p><strong>Population:</strong> ${COUNTRY.population}</p>
                               <p><strong>Region:</strong> ${COUNTRY.region}</p>
-                              <p><strong>Sub-region:</strong> ${COUNTRY.subregion}</p>
+                              <p><strong>Sub-region:</strong> ${SUB_REGION}</p>
                             </div>
                             <div class="country_modal_items">
                               <p><strong>Capital:</strong> ${CAPITAL}</p>
@@ -131,8 +159,9 @@ fetchAllCountries().then((countries) => {
         countryDetails.prepend(back_btn);
         body.classList.toggle("body_hide"); //hide scrollbar while showing countryDetails
       });
-      main.append(countryDetails, countryCard);
+      COUNTRIES_DIV.append(countryDetails, countryCard);
     }
+    main.append(SEARCH_FILTER, COUNTRIES_DIV);
   }
 });
 

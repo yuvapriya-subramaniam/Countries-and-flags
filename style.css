@@ -64,7 +64,16 @@ body:has(#toggle:checked) #back{
     margin-right: 0.3em;
 }
 
-.mainContainer {
+.srchFilterContainer{
+    margin-top: 2em;
+    margin-left: 3.5em;
+}
+
+/* .srch_flex1{
+
+} */
+
+.countries_parent_grid {
     margin-top: 2em;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
